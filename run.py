@@ -22,16 +22,51 @@ def get_user_input():
     """
     while True:
         print("Please enter the following information in order: ")
-        print("Wage(in USD), Car make, time for financing(in years), expected interest rate(if none provided 8% will be used")
+        print("Wage(in USD), Car make, time for financing(in years), ")
+        print("expected interest rate(if none provided 8% will be used")
         print("Example: 2000, Toyota, 6, 5")
         data = input("Enter your data here:\n")
         input_data = data.split(',')
 
-        if input_data != '':
+        if validate_input(input_data):
             print("Data was entered")
             break
     return input_data
 
 
-data = get_user_input()
-print(data)
+def validate_input(input_data):
+    """
+    Validates users input data to make sure the program has all
+    the info it needs to run!
+    """
+    try:
+        if len(input_data) < 4:
+            raise ValueError(f"4 values expected, you input {len(input_data)}")
+        wage = input_data[0]
+        carmake = input_data[1]
+        months_to_finance = input_data[2]
+        interest_rate = input_data[3]
+        print(wage, carmake, months_to_finance, interest_rate)
+        for data in input_data:
+            if carmake.isnumeric():
+                raise ValueError(f"Car make was entered as a {carmake}")
+            elif float(interest_rate) > 30:
+                raise ValueError(
+                    f"Any financing with a rate above 30% should be avoided")
+            elif (data == wage or data == months_to_finance) and not data.isnumeric():
+                raise ValueError(
+                    f"Only input whole numbers where asked, you input {data}")
+
+            elif int(months_to_finance) > 180:
+                raise ValueError(
+                    f"You cannot finance cars for more than 15 years")
+
+    except ValueError as e:
+        print(f"{e}, please try again.\n")
+        return False
+
+    return True
+
+
+input_data = get_user_input()
+print(input_data)
