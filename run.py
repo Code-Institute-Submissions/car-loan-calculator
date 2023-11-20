@@ -37,7 +37,7 @@ def get_user_input():
 def validate_input(input_data):
     """
     Validates users input data to make sure the program has all
-    the info it needs to run!
+    the correct data it needs to run!
     """
     try:
         if len(input_data) < 3:
@@ -73,6 +73,35 @@ def validate_input(input_data):
 
     return input_data
 
+def check_resale_value(carmake):
+    """
+    This function will cross-check user-input car maker value with 
+    some set values from spreadsheet to retrieve it's resale value after
+    3 years, should the user decide to sell.
+    """
+    carmake_worksheet = SHEET.worksheet("Carbrand")
+    carbrands = carmake_worksheet.row_values(1)[1:6]
+    print(carbrands)
+    index = 0
+    for car in carbrands:
+        if car.upper() == carbrands[index]:
+            resale_value = []
+            resale_value.append(carmake_worksheet.row_values(2)[index])
+            print(resale_value, index)
 
-input_data = get_user_input()
-print(input_data)
+        else:
+            print("Not listed")
+            index + 1
+            
+
+
+def main():
+    input_data = get_user_input()
+    print(input_data)
+    wage = input_data[0]
+    carmake = input_data[1]
+    finance_length = input_data[2]
+    interest_rate = input_data[3]
+    check_resale_value(carmake)
+
+main()
