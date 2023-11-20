@@ -13,7 +13,7 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('carloancalculator')
 
 # Code above was used during Code Institute Code along project
-# "Love Sandwiches", credits in README.md
+# "Love Sandwiches" to allow access to google API's, credits in README.md
 
 
 def get_user_input():
@@ -40,14 +40,20 @@ def validate_input(input_data):
     the info it needs to run!
     """
     try:
-        if len(input_data) < 4:
-            raise ValueError(f"4 values expected, you input {len(input_data)}")
-        wage = input_data[0]
+        if len(input_data) < 3:
+            raise ValueError(f"3 values required, you input {len(input_data)}")
+        elif len(input_data) == 4:
+            interest_rate = input_data[3]
+        else: 
+            interest_rate = 8
+            input_data.append(interest_rate)    # Adds default interest rate in case user did not enter interest rate
+
+        wage = input_data[0]    #Assigning values to increase readability
         carmake = input_data[1]
         months_to_finance = input_data[2]
-        interest_rate = input_data[3]
-        print(wage, carmake, months_to_finance, interest_rate)
+        
         for data in input_data:
+            index = 0
             if carmake.isnumeric():
                 raise ValueError(f"Car make was entered as a {carmake}")
             elif float(interest_rate) > 30:
@@ -55,17 +61,17 @@ def validate_input(input_data):
                     f"Any financing with a rate above 30% should be avoided")
             elif (data == wage or data == months_to_finance) and not data.isnumeric():
                 raise ValueError(
-                    f"Only input whole numbers where asked, you input {data}")
+                    f"Only input nhole umbewrs where asked, you input {data}")
 
             elif int(months_to_finance) > 180:
                 raise ValueError(
                     f"You cannot finance cars for more than 15 years")
-
+        
     except ValueError as e:
         print(f"{e}, please try again.\n")
         return False
 
-    return True
+    return input_data
 
 
 input_data = get_user_input()
