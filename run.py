@@ -72,7 +72,7 @@ def validate_input(input_data):
                     f"Only input whole numbers besides for interest rate, you input {data}")
             if int(months_to_finance) > 180:
                 raise ValueError("You cannot finance cars for more than 15 years")
-
+    # This ValueError handling was provided in Code Institutes "Lovesandwiches"-project
     except ValueError as e:
         print(f"{e}, please try again.\n")
         return False
@@ -93,12 +93,14 @@ def check_resale_value(data):
     user what kind of value to expect in a worst case scenario.
     """
     carmake_worksheet = SHEET.worksheet("Carbrand")
+    #This line of code was inspired by Code Institutes code along project, "Lovesandwiches"
     carbrands = carmake_worksheet.row_values(1)[1:6]
     carmake = data[2]
     index = 0
     resale_value = 40
     for car in carbrands:
         if car == carmake:
+            # This line of code was co-created with Chat-GPT
             resale_value = int(carmake_worksheet.cell(2, index +2).value)
             print(f"Based on our research, used {carmake}s sell for {resale_value}%")
 
@@ -120,7 +122,7 @@ def update_worksheet(data, worksheet):
     worksheet_to_update.append_row(data)
     print(f"Data was added to {worksheet}\n")
 
-def calculate_costs(data):
+def calculate_results(data):
     """
     Purpose of this function is to check what the cost of the car will be to calculate 
     how much the car will cost per month and see if the user can actually afford this car.
@@ -162,7 +164,7 @@ def main():
     input_data = get_user_input()
     input_data.append(check_resale_value(input_data))
     update_worksheet(input_data, 'Finance')
-    complete_data = calculate_costs(input_data)
+    complete_data = calculate_results(input_data)
     update_worksheet(complete_data, 'Result')
     print("Your results have been saved in worksheet: Result")
     print("Thanks for using CarLoanCalculator!")
