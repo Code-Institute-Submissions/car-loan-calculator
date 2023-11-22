@@ -1,5 +1,5 @@
 # Car Loan Calculator
-
+[Car Loan Calculator](https://carloancalculator-029042eff7cd.herokuapp.com/)
 This Python program uses Google Sheets to calculate and analyze the financial aspects of
 a car loan. It takes user input for parameters such as price of the car, monthly wage,
 car make, financing duration and expected interest. 
@@ -30,8 +30,8 @@ The calculated results, including monthly costs and affordability, are then stor
 
 ### Frameworks and Libraries
 
--gspread
--google.oauth2.service_account
+- gspread
+- google.oauth2.service_account
 
 ## Features
 
@@ -76,28 +76,28 @@ based of the user's input information. It evaluates affordability and stores the
 ### Examples
 
 1. **Input:*** 2000,1000,bmw,30,5
-    -**Expected Output:**
+    - **Expected Output:**
         - Downpayment: 400
         - Monthly Cost: 267
         - Can Afford: Yes
         - Resale Value: 45%
-    -**Was Output As Expected?**
+    - **Was Output As Expected?**
         - Yes
 2. **Input:** 2000,880,bmw,30,5
-    -**Expected Output:**
+    - **Expected Output:**
         - Downpayment: 400
         - Monthly Cost: 267
         - Can Afford: Maybe
         - Resale Value: 45%
-    -**Was Output As Expected?**
+    - **Was Output As Expected?**
         - Yes
 3. **Input:** 2000,400,bmw,30,5
-    -**Expected Output:**
+    - **Expected Output:**
         - Downpayment: 400
         - Monthly Cost: 267
         - Can Afford: No
         - Resale Value: 45%
-    -**Was Output As Expected?**
+    - **Was Output As Expected?**
         - Yes
 
 ### PyLint Results
@@ -118,4 +118,5 @@ identified and addressed during testing:
 - [gspread](https://gspread.readthedocs.io) and [google.oauth2.service_account](https://google-auth.readthedocs.io) 
     libraries for enabling Google Sheets interaction.
 - Chat-GPT for specific code error. The code made with Chat-GPT is commented inside the run.py file. 
+- Heroku for allowing cloud hosting for this app. (https://dashboard.heroku.com/apps)
 - All other code is written by me 
