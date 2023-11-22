@@ -24,7 +24,8 @@ def get_user_input():
     """
     while True:
         print("Please enter the following information in order: ")
-        print("Price of car, Wage(monthly), Car make, time for financing(in months),")
+        print("Price of car, Wage(monthly), Car make,")
+        print("time for financing(in months),")
         print(" expected interest rate(if none provided 8% will be used")
         print("Example: 2000,1000,bmw,30,5")
         data = input("Enter your data here:\n")
@@ -55,10 +56,11 @@ def validate_input(input_data):
             interest_rate = input_data[4]
         else:
             interest_rate = 8
-            # Adds default interest rate in case user did not enter interest rate
+            # Adds default interest rate in case
+            # user did not enter interest rate
             input_data.append(interest_rate)
-
-        cost_of_car = input_data[0]    #Assigning values to increase readability
+        # Assigning values to increase readability
+        cost_of_car = input_data[0]
         wage = input_data[1]
         carmake = input_data[2]
         months_to_finance = input_data[3]
@@ -67,12 +69,12 @@ def validate_input(input_data):
                 raise ValueError(f"Car make was entered as a {carmake}")
             if float(interest_rate) > 30:
                 raise ValueError("Financing with a rate above 30% should be avoided")
-            if (data in[cost_of_car, wage ,months_to_finance]) and not data.isnumeric():
+            if (data in [cost_of_car, wage, months_to_finance]) and not data.isnumeric():
                 raise ValueError(
                     f"Only input whole numbers besides for interest rate, you input {data}")
             if int(months_to_finance) > 180:
                 raise ValueError("You cannot finance cars for more than 15 years")
-    # This ValueError handling was provided in Code Institutes "Lovesandwiches"-project
+# This ValueError handling was provided in Code Institutes "Lovesandwiches"-project
     except ValueError as e:
         print(f"{e}, please try again.\n")
         return False
@@ -82,18 +84,18 @@ def validate_input(input_data):
 
 def check_resale_value(data):
     """
-    This function will cross-check user-input car maker value with 
+    This function will cross-check user-input car maker value with
     some set values from spreadsheet to retrieve it's resale value after
-    3 years, should the user decide to sell. 
+    3 years, should the user decide to sell.
     ***NOT BASED ON REAL VALUES, THIS PROGRAM IS FOR EDUCATIONAL USE ONLY***
-    If carbrand is not found in spreadsheet the default resale value is set to 40%. 
+    If carbrand is not found in spreadsheet the default resale value is set to 40%.
     While not used in calculations, most car dealership provide
-    a type of financing that is based on resale value 
+    a type of financing that is based on resale value
     after 2-3 years of use. This will help an uninformed
     user what kind of value to expect in a worst case scenario.
     """
     carmake_worksheet = SHEET.worksheet("Carbrand")
-    #This line of code was inspired by Code Institutes code along project, "Lovesandwiches"
+# This line of code was inspired by Code Institutes code along project, "Lovesandwiches"
     carbrands = carmake_worksheet.row_values(1)[1:6]
     carmake = data[2]
     index = 0
@@ -101,7 +103,7 @@ def check_resale_value(data):
     for car in carbrands:
         if car == carmake:
             # This line of code was co-created with Chat-GPT
-            resale_value = int(carmake_worksheet.cell(2, index +2).value)
+            resale_value = int(carmake_worksheet.cell(2, index + 2).value)
             print(f"Based on our research, used {carmake}s sell for {resale_value}%")
 
         else:
@@ -114,7 +116,7 @@ def check_resale_value(data):
 
 def update_worksheet(data, worksheet):
     """
-    This function updates the specified worksheet with information provided. 
+    This function updates the specified worksheet with information provided.
     Will be used to update worksheets "Finance" as well as "Results".
     """
     print("Your data is being updated...\n")
@@ -122,9 +124,10 @@ def update_worksheet(data, worksheet):
     worksheet_to_update.append_row(data)
     print(f"Data was added to {worksheet}\n")
 
+
 def calculate_results(data):
     """
-    Purpose of this function is to check what the cost of the car will be to calculate 
+    Purpose of this function is to check what the cost of the car will be to calculate
     how much the car will cost per month and see if the user can actually afford this car.
     """
     price = data[0]
@@ -133,7 +136,7 @@ def calculate_results(data):
     # Calculates 20 percent of the price of the car
     data.append(downpayment)
     left_to_finance = price - downpayment
-    monthly_cost = round((left_to_finance/ data[3]) * data[4])
+    monthly_cost = round((left_to_finance / data[3]) * data[4])
     # Calulates cost of car divided by number of months times the interest rate
     data.append(monthly_cost)
     print(f"Most contries require at least a 20 percent downpayment, which would be {downpayment}")
@@ -142,7 +145,7 @@ def calculate_results(data):
     if monthly_cost <= (wage * 0.3):
         print("With a 20 percent downpayment, it seems you can afford this car!")
         can_afford = "Yes"
-    elif monthly_cost <= (wage*0.4):
+    elif monthly_cost <= (wage * 0.4):
         print("You might be able to afford this car. Please check with your car dealership,")
         print("also make sure you are financially prepared for any unexpected costs,")
         print("such as repairs or medical emergencies.")
