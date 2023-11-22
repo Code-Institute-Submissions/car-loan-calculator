@@ -150,7 +150,6 @@ def calculate_costs(data):
         print("try changing the length of finance or use a bigger downpayment!")
         print(f"You can always check with your local {data[2]} dealership for further assistance!")
         can_afford = "No"
-    print(f"in calculate the data is: {data}")
     data.append(can_afford)
     return data
 
@@ -161,13 +160,13 @@ def main():
     necessary to use the program
     """
     input_data = get_user_input()
-    print(input_data)
     input_data.append(check_resale_value(input_data))
     update_worksheet(input_data, 'Finance')
     complete_data = calculate_costs(input_data)
     update_worksheet(complete_data, 'Result')
     print("Your results have been saved in worksheet: Result")
     print("Thanks for using CarLoanCalculator!")
+    print("You can run the calculator again by pressing 'RUN PROGRAM'!")
 
 
 main()
