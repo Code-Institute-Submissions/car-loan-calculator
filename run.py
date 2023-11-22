@@ -22,21 +22,22 @@ def get_user_input():
     """
     while True:
         print("Please enter the following information in order: ")
-        print("Wage(in USD), Car make, time for financing(in years), ")
-        print("expected interest rate(if none provided 8% will be used")
-        print("Example: 2000, Toyota, 6, 5")
+        print("Price of car, Wage(monthly), Car make, time for financing(in months),")
+        print(" expected interest rate(if none provided 8% will be used")
+        print("Example: 2000,200,Toyota,6,5")
         data = input("Enter your data here:\n")
         input_data = data.split(',')
 
         if validate_input(input_data):
-            print("Data was entered successfully")
+            print("\nData was entered successfully")
             break
-    wage = int(input_data[0]) 
-    carmake = input_data[1].upper()
-    finance_length = int(input_data[2])
-    interest_rate = float(input_data[3])
-    final_data = [wage, carmake, finance_length,interest_rate]
-    return final_data
+    cost_of_car = int(input_data[0])
+    wage = int(input_data[1]) 
+    carmake = input_data[2].upper()
+    finance_length = int(input_data[3])
+    interest_rate = float(input_data[4])
+    valid_data = [cost_of_car, wage, carmake, finance_length, interest_rate]
+    return valid_data
 
 
 def validate_input(input_data):
@@ -45,17 +46,18 @@ def validate_input(input_data):
     the correct data it needs to run!
     """
     try:
-        if len(input_data) < 3:
+        if len(input_data) < 4:
             raise ValueError(f"3 values required, you input {len(input_data)}")
-        elif len(input_data) == 4:
-            interest_rate = input_data[3]
+        elif len(input_data) == 5:
+            interest_rate = input_data[4]
         else: 
             interest_rate = 8
             input_data.append(interest_rate)    # Adds default interest rate in case user did not enter interest rate
 
-        wage = input_data[0]    #Assigning values to increase readability
-        carmake = input_data[1]
-        months_to_finance = input_data[2]
+        cost_of_car = input_data[0]    #Assigning values to increase readability
+        wage = input_data[1]
+        carmake = input_data[2]
+        months_to_finance = input_data[3]
         
         for data in input_data:
             index = 0
@@ -64,10 +66,9 @@ def validate_input(input_data):
             elif float(interest_rate) > 30:
                 raise ValueError(
                     f"Any financing with a rate above 30% should be avoided")
-            elif (data == wage or data == months_to_finance) and not data.isnumeric():
+            elif (data == cost_of_car or data == wage or data == months_to_finance) and not data.isnumeric():
                 raise ValueError(
-                    f"Only input nhole umbewrs where asked, you input {data}")
-
+                    f"Only input whole numbers for cost, wage and months to finance, you input {data}")
             elif int(months_to_finance) > 180:
                 raise ValueError(
                     f"You cannot finance cars for more than 15 years")
@@ -88,7 +89,7 @@ def check_resale_value(data):
     """
     carmake_worksheet = SHEET.worksheet("Carbrand")
     carbrands = carmake_worksheet.row_values(1)[1:6]
-    carmake = data[1]
+    carmake = data[2]
     index = 0
     resale_value = 40
     for car in carbrands:
@@ -112,6 +113,30 @@ def update_worksheet(data, worksheet):
     worksheet_to_update.append_row(data)
     print(f"Data was added to {worksheet}\n")
 
+def calculate_costs(data):
+    """
+    Purpose of this function is to check what the cost of the car will be to calculate 
+    how much the car will cost per month and see if the user can actually afford this car.
+    """
+    price = data[0]
+    wage = data[1]
+    downpayment = price*0.2 # Calculates 20 percent of the price of the car 
+    left_to_finance = price - downpayment
+    monthly_cost = round((left_to_finance/ data[3]) * data[4]) # Calulates cost of car divided by number of months times the interest rate
+    data.append(monthly_cost)
+    print(f"Most contries require at least a 20 percent downpayment, which would be {downpayment}.\n")
+    print(f"The calculated monthly cost will be: {monthly_cost}!\n")
+    if monthly_cost <= (wage * 0.3):
+        print(f"With a 20 percent downpayment, it seems you can afford this car!")
+        
+        
+    elif monthly_cost <= (wage*0.4):
+        print("You might be able to afford this car. Please check with your car dealership,")
+        print("also make sure you are financially prepared for any unexpected costs, such as repairs or medical emergencies.")
+    else:
+        print("Sorry! Looks like you cannot afford this car based on the data you entered.")
+        print("try changing the length of finance or use a bigger downpayment!")
+        print(f"You can always check with your local {data[2]} dealership for further assistance!")
 
 
 def main():
@@ -120,5 +145,6 @@ def main():
     input_data.append(check_resale_value(input_data))
     print(input_data)
     update_worksheet(input_data, 'Finance')
+    calculate_costs(input_data)
 
 main()
