@@ -37,7 +37,7 @@ The calculated results, including monthly costs and affordability, are then stor
 
 ## LucidCharts[Visit LucidCharts here](https://lucid.co/)
 
-![Image of a logic chart made with LucidCharts](./assets/images/chart.png)
+![Image of a logic chart made with LucidCharts](assets/images/chart.png)
 
 ## Features
 
