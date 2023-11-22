@@ -1,5 +1,7 @@
 # Car Loan Calculator
+
 [Car Loan Calculator](https://carloancalculator-029042eff7cd.herokuapp.com/)
+
 This Python program uses Google Sheets to calculate and analyze the financial aspects of
 a car loan. It takes user input for parameters such as price of the car, monthly wage,
 car make, financing duration and expected interest. 
@@ -32,6 +34,10 @@ The calculated results, including monthly costs and affordability, are then stor
 
 - gspread
 - google.oauth2.service_account
+
+## LucidCharts[Visit LucidCharts here](https://lucid.co/)
+
+![Image of a logic chart made with LucidCharts](./assets/images/chart.png)
 
 ## Features
 
@@ -75,7 +81,7 @@ based of the user's input information. It evaluates affordability and stores the
 
 ### Examples
 
-1. **Input:*** 2000,1000,bmw,30,5
+1. **Input:** 2000,1000,bmw,30,5
     - **Expected Output:**
         - Downpayment: 400
         - Monthly Cost: 267
