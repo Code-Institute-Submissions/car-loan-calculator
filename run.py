@@ -50,7 +50,7 @@ def validate_input(input_data):
     e = "Unknown error"
     try:
         if len(input_data) < 4:
-            raise ValueError(f"3 values required, you input {len(input_data)}")
+            raise ValueError(f"4 values required, you input {len(input_data)}")
         if len(input_data) == 5:
             interest_rate = input_data[4]
         else:
