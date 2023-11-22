@@ -81,17 +81,15 @@ def check_resale_value(carmake):
     """
     carmake_worksheet = SHEET.worksheet("Carbrand")
     carbrands = carmake_worksheet.row_values(1)[1:6]
-    print(carbrands)
     index = 0
+    resale_value = 40
     for car in carbrands:
-        if car.upper() == carbrands[index]:
-            resale_value = []
-            resale_value.append(carmake_worksheet.row_values(2)[index])
-            print(resale_value, index)
+        if car.upper() == carmake.upper():
+            resale_value = carmake_worksheet.cell(2, index +2).value
 
         else:
-            print("Not listed")
-            index + 1
+            index += 1
+    return resale_value
             
 
 
