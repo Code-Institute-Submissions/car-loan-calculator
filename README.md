@@ -118,4 +118,4 @@ identified and addressed during testing:
 - [gspread](https://gspread.readthedocs.io) and [google.oauth2.service_account](https://google-auth.readthedocs.io) 
     libraries for enabling Google Sheets interaction.
 - Chat-GPT for specific code error. The code made with Chat-GPT is commented inside the run.py file. 
-- All other code is written by me
+- All other code is written by me 
