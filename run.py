@@ -29,9 +29,14 @@ def get_user_input():
         input_data = data.split(',')
 
         if validate_input(input_data):
-            print("Data was entered")
+            print("Data was entered successfully")
             break
-    return input_data
+    wage = int(input_data[0]) 
+    carmake = input_data[1].upper()
+    finance_length = int(input_data[2])
+    interest_rate = float(input_data[3])
+    final_data = [wage, carmake, finance_length,interest_rate]
+    return final_data
 
 
 def validate_input(input_data):
@@ -73,33 +78,47 @@ def validate_input(input_data):
 
     return input_data
 
-def check_resale_value(carmake):
+
+def check_resale_value(data):
     """
     This function will cross-check user-input car maker value with 
     some set values from spreadsheet to retrieve it's resale value after
-    3 years, should the user decide to sell.
+    3 years, should the user decide to sell. If carbrand is not found in spreadsheet 
+    the default resale value is set to 40%.
     """
     carmake_worksheet = SHEET.worksheet("Carbrand")
     carbrands = carmake_worksheet.row_values(1)[1:6]
+    carmake = data[1]
     index = 0
     resale_value = 40
     for car in carbrands:
-        if car.upper() == carmake.upper():
-            resale_value = carmake_worksheet.cell(2, index +2).value
+        if car == carmake:
+            resale_value = int(carmake_worksheet.cell(2, index +2).value)
 
         else:
             index += 1
+    if resale_value == 40:
+        print(f"{carmake} is not among our known car brands, resale value is set to 40%")
     return resale_value
             
+
+def update_worksheet(data, worksheet):
+    """
+    This function updates the specified worksheet with information provided. 
+    Will be used to update worksheets "Finance" as well as "Results".
+    """
+    print(f"{worksheet} is being updated...\n")
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    worksheet_to_update.append_row(data)
+    print(f"Data was added to {worksheet}\n")
+
 
 
 def main():
     input_data = get_user_input()
     print(input_data)
-    wage = input_data[0]
-    carmake = input_data[1]
-    finance_length = input_data[2]
-    interest_rate = input_data[3]
-    check_resale_value(carmake)
+    input_data.append(check_resale_value(input_data))
+    print(input_data)
+    update_worksheet(input_data, 'Finance')
 
 main()
