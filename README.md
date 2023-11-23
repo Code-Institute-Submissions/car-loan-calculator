@@ -5,7 +5,8 @@
 This Python program uses Google Sheets to calculate and analyze the financial aspects of
 a car loan. It takes user input for parameters such as price of the car, monthly wage,
 car make, financing duration and expected interest. 
-The calculated results, including monthly costs and affordability, are then stored in a Google Spreadsheet
+The calculated results, including monthly costs and affordability, are then stored in a Google Spreadsheet.
+All the resale values are fictional and are not based on any real world values or research!
 
 ## Table of Contents
 
@@ -124,5 +125,5 @@ identified and addressed during testing:
 - [gspread](https://gspread.readthedocs.io) and [google.oauth2.service_account](https://google-auth.readthedocs.io) 
     libraries for enabling Google Sheets interaction.
 - Chat-GPT for specific code error. The code made with Chat-GPT is commented inside the run.py file. 
-- Heroku for allowing cloud hosting for this app. (https://dashboard.heroku.com/apps)
+- Heroku for allowing cloud hosting for this app. [Heroku](https://dashboard.heroku.com/apps)
 - All other code is written by me 
